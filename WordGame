@@ -1,7 +1,7 @@
-using System;
-
 namespace WordGame
 {
+    using System;
+    
     public class WordGame
     {
         public static void Main()
@@ -90,7 +90,7 @@ namespace WordGame
                 count++;
             }
         }
-        
+
         public static void checkMatrixDiagonalToRight(int row, int col, char[,] matrix, string input, ref int count)
         {
             bool wordIsFound = true;
@@ -109,6 +109,7 @@ namespace WordGame
                     wordIsFound = false;
                 }
             }
+
             if (wordIsFound)
             {
                 count++;
