@@ -19,7 +19,7 @@ namespace Points
                 }
                 Calculate(ref currentX, ref currentY, update, coordinate);
             }
-            Console.WriteLine("({0},{1})",currentX,currentY);
+            Console.WriteLine("( {0},{1} )",currentX,currentY);
         }
         public static void Calculate(ref int currentX,ref int currentY,int update,char symbol) 
         {
