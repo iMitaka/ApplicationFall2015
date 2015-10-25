@@ -2,9 +2,9 @@ using System;
 
 namespace WordGame
 {
-    class WordGame
+    public class WordGame
     {
-        static void Main()
+        public static void Main()
         {
             char[,] matrix = new char[5, 4] 
             {{'i', 'v', 'a', 'n'},
@@ -12,7 +12,7 @@ namespace WordGame
              {'i', 'n', 'a', 'v'},
              {'m', 'v', 'v', 'n'},
              {'q', 'r', 'i', 't'}};
-            string input = Console.ReadLine();
+            string input = "ivan";
             char firstChar = input[0];
             int count = 0;
             string word = string.Empty;
@@ -35,7 +35,7 @@ namespace WordGame
                     {
                         count++;
                     }
-                }         
+                }
             }
             for (int col = 0; col < matrix.GetLength(1); col++)
             {
@@ -56,27 +56,64 @@ namespace WordGame
                     {
                         count++;
                     }
-                }         
+                }
             }
             for (int row = 0; row < matrix.GetLength(0); row++)
             {
                 for (int col = 0; col < matrix.GetLength(1); col++)
                 {
-                    if (matrix[row, col] == firstChar && col <= matrix.GetLength(1) - input.Length && row <= matrix.GetLength(0) - input.Length)
-                    {
-                        word = string.Empty;
-                        for (int i = 0; i < input.Length; i++)
-                        {
-                            word += matrix[row, col + i];
-                            if (word == input)
-                            {
-                                count++;
-                            }
-                        }
-                    }
+                    checkMatrixDiagonalToRight(row, col, matrix, input, ref count);
+                    checkMatrixDiagonalToLeft(row, col, matrix, input, ref count);
                 }
             }
             Console.WriteLine(count);
+        }
+        public static void checkMatrixDiagonalToLeft(int row, int col, char[,] matrix, string input, ref int count)
+        {
+            bool wordIsFound = true;
+            for (int i = 0; i < input.Length; i++)
+            {
+                try
+                {
+                    if (input[i] != matrix[row + i, col + i])
+                    {
+                        wordIsFound = false;
+                        break;
+                    }
+                }
+                catch
+                {
+                    wordIsFound = false;
+                }
+            }
+            if (wordIsFound)
+            {
+                count++;
+            }
+        }
+        
+        public static void checkMatrixDiagonalToRight(int row, int col, char[,] matrix, string input, ref int count)
+        {
+            bool wordIsFound = true;
+            for (int i = 0; i < input.Length; i++)
+            {
+                try
+                {
+                    if (input[i] != matrix[row - i, col - i])
+                    {
+                        wordIsFound = false;
+                        break;
+                    }
+                }
+                catch 
+                {
+                    wordIsFound = false;
+                }
+            }
+            if (wordIsFound)
+            {
+                count++;
+            }
         }
     }
 }
