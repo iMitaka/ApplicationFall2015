@@ -13,7 +13,6 @@ namespace WordGame
              {'m', 'v', 'v', 'n'},
              {'q', 'r', 'i', 't'}};
             string input = "ivan";
-            char firstChar = input[0];
             int count = 0;
             string word = string.Empty;
             for (int row = 0; row < matrix.GetLength(0); row++)
