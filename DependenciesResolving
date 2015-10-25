@@ -1,0 +1,78 @@
+namespace DependenciesResolving
+{
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+
+    public class DependenciesResolving
+    {
+        public static void Main()
+        {
+            var allPackages = new Dictionary<string, List<string>>();
+            var dependencies = new List<string>();
+            var installedModules = new HashSet<string>();
+            var allPackagesFirstValue = new List<string>();
+            var allPackagesSecondValue = new List<string>();
+            var allPackagesThirdValue = new List<string>();
+            var allPackagesForthValue = new List<string>();
+            var allPackagesfifthValue = new List<string>();
+
+            allPackagesFirstValue.Add("jQuery");
+            allPackagesFirstValue.Add("underscore");
+            allPackagesSecondValue.Add("queryJ");
+            allPackagesThirdValue.Add("lodash");
+
+            allPackages.Add("backbone", allPackagesFirstValue);
+            allPackages.Add("jQuery", allPackagesSecondValue);
+            allPackages.Add("underscore", allPackagesThirdValue);
+            allPackages.Add("queryJ", allPackagesForthValue);
+            allPackages.Add("lodash", allPackagesfifthValue);
+
+            dependencies.Add("backbone");
+
+            installedModules.Add("lodash");
+
+            Console.WriteLine("installed_modules/");
+            foreach (var packege in PackageManager(allPackages, dependencies, installedModules))
+            {
+                Console.WriteLine("|--" + packege);
+            }
+        }
+        public static HashSet<string> PackageManager(Dictionary<string, List<String>> allPackages, List<string> dependencies, HashSet<string> installedModules)
+        {
+            var packages = new Stack<String>();
+
+            foreach (var dependancy in dependencies)
+            {
+                if (!installedModules.Contains(dependancy))
+                {
+                    installedModules.Add(dependancy);
+                    foreach (var packageOfDependancy in allPackages[dependancy])
+                    {
+                        if (!installedModules.Contains(packageOfDependancy))
+                        {
+                            packages.Push(packageOfDependancy);
+                            installedModules.Add(packageOfDependancy);
+                        }
+                    }
+                }
+                while (packages.Count != 0)
+                {
+                    var temporaryDependancy = packages.Pop();
+                    if (allPackages[temporaryDependancy].Count != 0)
+                    {
+                        foreach (var subPackage in allPackages[temporaryDependancy])
+                        {
+                            if (!installedModules.Contains(subPackage))
+                            {
+                                packages.Push(subPackage);
+                                installedModules.Add(subPackage);
+                            }
+                        }
+                    }
+                }
+            }
+            return installedModules;
+        }
+    }
+}
