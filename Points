@@ -1,0 +1,44 @@
+namespace Points
+{
+    using System;
+    using System.Linq;
+    public class Points
+    {
+       
+        public static void Main()
+        {
+            int currentX = 0;
+            int currentY = 0;
+            char[] inputCoordinate = Console.ReadLine().ToArray();
+            int update = 1;
+            foreach (var coordinate in inputCoordinate)
+            {
+                if (coordinate == '~')
+                {
+                    update *= -1;                
+                }
+                Calculate(ref currentX, ref currentY, update, coordinate);
+            }
+            Console.WriteLine("({0},{1})",currentX,currentY);
+        }
+        public static void Calculate(ref int currentX,ref int currentY,int update,char symbol) 
+        {
+            if (symbol == '^')
+            {
+                currentY-= update;
+            }
+            else if (symbol == 'v')
+            {
+                currentY+= update;
+            }
+            else if (symbol == '<')
+            {
+                currentX+= update;
+            }
+            else if (symbol == '>')
+            {
+                currentX-= update;
+            }
+        }
+    }
+}
